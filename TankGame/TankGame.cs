@@ -10,32 +10,35 @@ namespace TankGame
 {
     public class TankGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D tankTexture;
-        Sprite tank;
+        GraphicsDeviceManager Graphics;
+        SpriteBatch SpriteBatch;
+        Texture2D TankTexture;
+        Sprite Tank;
 
         public TankGame() : base()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.PreferMultiSampling = true;
+            Graphics = new GraphicsDeviceManager(this);
+            Graphics.IsFullScreen = true;
+            Graphics.PreferredBackBufferWidth = 1920;
+            Graphics.PreferredBackBufferHeight = 1080;
+            Graphics.PreferMultiSampling = true;
 
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-            tank = new Sprite(tankTexture);
             base.Initialize();
+
+            Tank = new Sprite(TankTexture);
+            Tank.X = GraphicsDevice.Viewport.Width / 2;
+            Tank.Y = GraphicsDevice.Viewport.Height / 2;
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            tankTexture = Content.Load<Texture2D>("TankBaseTile.png");
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            TankTexture = Content.Load<Texture2D>("TankBaseTile.png");
         }
 
         protected override void UnloadContent()
@@ -55,15 +58,15 @@ namespace TankGame
             if (magnitude > 0.4)
             {
                 frame = (frame + 1) % 6;
-                tank.Speed = 3;
-                tank.Heading = (float)(Math.Atan2(y, x));
+                Tank.Speed = 3;
+                Tank.Heading = (float)(Math.Atan2(y, x));
             }
             else
             {
-                tank.Speed = 0;
+                Tank.Speed = 0;
             }
 
-            tank.Advance();
+            Tank.Advance();
 
             base.Update(gameTime);
         }
@@ -76,10 +79,10 @@ namespace TankGame
             int index = frame < 3 ? 0 : 1;
             Rectangle sourceRect = new Rectangle(62 * index, 0, 62, 100);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(tankTexture, tank.Position, sourceRect, Color.White, (float)(tank.Heading - Math.PI / 2),
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(TankTexture, Tank.Position, sourceRect, Color.White, (float)(Tank.Heading - Math.PI / 2),
                 new Vector2(32, 50), 1f, SpriteEffects.None, 0);
-            spriteBatch.End();
+            SpriteBatch.End();
 
             base.Draw(gameTime);
         }
