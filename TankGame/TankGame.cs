@@ -13,7 +13,7 @@ namespace TankGame
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
         Texture2D TankTexture;
-        Sprite Tank;
+        AnimatedSprite Tank;
 
         public TankGame() : base()
         {
@@ -30,7 +30,7 @@ namespace TankGame
         {
             base.Initialize();
 
-            Tank = new Sprite(TankTexture);
+            Tank = new AnimatedSprite(TankTexture, 1, 4);
             Tank.X = GraphicsDevice.Viewport.Width / 2;
             Tank.Y = GraphicsDevice.Viewport.Height / 2;
         }
@@ -38,7 +38,7 @@ namespace TankGame
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            TankTexture = Content.Load<Texture2D>("TankBaseTile.png");
+            TankTexture = Content.Load<Texture2D>("Images/TankBaseTile4Green.png");
         }
 
         protected override void UnloadContent()
@@ -57,31 +57,27 @@ namespace TankGame
 
             if (magnitude > 0.4)
             {
-                frame = (frame + 1) % 6;
                 Tank.Speed = 3;
                 Tank.Heading = (float)(Math.Atan2(y, x));
+                Tank.Animating = true;
             }
             else
             {
                 Tank.Speed = 0;
+                Tank.Animating = false;
             }
 
-            Tank.Advance();
+            Tank.Update();
 
             base.Update(gameTime);
         }
 
-        int frame = 0;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            int index = frame < 3 ? 0 : 1;
-            Rectangle sourceRect = new Rectangle(62 * index, 0, 62, 100);
-
             SpriteBatch.Begin();
-            SpriteBatch.Draw(TankTexture, Tank.Position, sourceRect, Color.White, (float)(Tank.Heading - Math.PI / 2),
-                new Vector2(32, 50), 1f, SpriteEffects.None, 0);
+            Tank.Draw(SpriteBatch);
             SpriteBatch.End();
 
             base.Draw(gameTime);

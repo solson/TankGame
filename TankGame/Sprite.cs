@@ -26,7 +26,7 @@ namespace TankGame
             Heading = 0;
         }
 
-        public void Advance()
+        public virtual void Update()
         {
             X += VelX;
             Y += VelY;
