@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TankGame
 {
-    class Sprite
+    public class Sprite
     {
         public Texture2D Texture { get; set; }
         public float X { get; set; }
@@ -30,6 +30,12 @@ namespace TankGame
         {
             X += VelX;
             Y += VelY;
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Position, null, Color.White, (float)(Heading + Math.PI / 2),
+                new Vector2(Texture.Width / 2, Texture.Height / 2), 1f, SpriteEffects.None, 0);
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TankGame
 {
-    class AnimatedSprite : Sprite
+    public class AnimatedSprite : Sprite
     {
         public int Rows { get; set; }
         public int Row { get; private set; }
@@ -18,8 +18,9 @@ namespace TankGame
         private Rectangle SourceRect;
         private Stopwatch Timer;
         private long TimeSinceUpdate;
+        private int updateTime;
 
-        public AnimatedSprite(Texture2D texture, int rows, int columns) : base(texture)
+        public AnimatedSprite(Texture2D texture, int rows, int columns, int upTime) : base(texture)
         {
             Rows = rows;
             Columns = columns;
@@ -28,6 +29,7 @@ namespace TankGame
             Timer = new Stopwatch();
             Timer.Start();
             TimeSinceUpdate = 0;
+            updateTime = upTime;
         }
 
         public override void Update()
@@ -35,7 +37,7 @@ namespace TankGame
             base.Update();
             if(Animating)
             {
-                if(Timer.ElapsedMilliseconds - TimeSinceUpdate > 25)
+                if(Timer.ElapsedMilliseconds - TimeSinceUpdate > updateTime)
                 {
                     NextFrame();
                     TimeSinceUpdate = Timer.ElapsedMilliseconds;
@@ -59,7 +61,7 @@ namespace TankGame
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, SourceRect, Color.White, (float)(Heading + Math.PI / 2),
                 new Vector2(FrameWidth / 2, FrameHeight / 2), 1f, SpriteEffects.None, 0);
