@@ -85,7 +85,7 @@ namespace TankGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Beige);
+            GraphicsDevice.Clear(Color.BurlyWood);
 
             SpriteBatch.Begin();
             Player.TankBase.Draw(SpriteBatch);
