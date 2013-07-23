@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="Tank.cs" />
     <Compile Include="TankGame.cs" />
     <Compile Include="Sprite.cs" />

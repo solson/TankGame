@@ -14,13 +14,15 @@ namespace TankGame
         public int FrameWidth { get { return Texture.Width / Columns; } }
         public int FrameHeight { get { return Texture.Height / Rows; } }
         public Boolean Animating { get; set; }
+        public int UpdateTime { get; set; }
+        public int UpdateFrameTime { get; private set; }
 
         private Rectangle SourceRect;
         private Stopwatch Timer;
         private long TimeSinceUpdate;
-        private int updateTime;
+        
 
-        public AnimatedSprite(Texture2D texture, int rows, int columns, int upTime) : base(texture)
+        public AnimatedSprite(Texture2D texture, int rows, int columns, int updateFrameTime) : base(texture)
         {
             Rows = rows;
             Columns = columns;
@@ -29,7 +31,7 @@ namespace TankGame
             Timer = new Stopwatch();
             Timer.Start();
             TimeSinceUpdate = 0;
-            updateTime = upTime;
+            UpdateFrameTime = updateFrameTime;
         }
 
         public override void Update()
@@ -37,7 +39,7 @@ namespace TankGame
             base.Update();
             if(Animating)
             {
-                if(Timer.ElapsedMilliseconds - TimeSinceUpdate > updateTime)
+                if(Timer.ElapsedMilliseconds - TimeSinceUpdate > UpdateTime)
                 {
                     NextFrame();
                     TimeSinceUpdate = Timer.ElapsedMilliseconds;
