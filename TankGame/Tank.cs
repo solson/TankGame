@@ -19,8 +19,8 @@ namespace TankGame
         {
             TankBase.Update();
             //To offset the turret (the turret isn't in the middle of the tank)
-            TankTurret.X = TankBase.X + 7 * (float) Math.Cos(TankBase.Heading);
-            TankTurret.Y = TankBase.Y + 7 * (float) Math.Sin(TankBase.Heading);
+            TankTurret.X = TankBase.X + 6 * (float) Math.Cos(TankBase.Heading);
+            TankTurret.Y = TankBase.Y + 6 * (float) Math.Sin(TankBase.Heading);
         }
     }
 }
